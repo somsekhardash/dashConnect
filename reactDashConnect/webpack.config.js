@@ -6,6 +6,15 @@ const htmlPlugin = new HtmlWebPackPlugin({
 });
 
 module.exports = {
+    entry: "./src/index.tsx",
+    output: {
+        filename: "bundle.js",
+        path: __dirname + "/dist"
+    },
+    devtool: "source-map",
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".json"]
+    },
     module: {
         rules: [
             {
@@ -15,6 +24,8 @@ module.exports = {
                     loader: "babel-loader"
                 }
             },
+            { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
             {
                 test: /\.scss$/,
                 use: [
