@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from "react-dom";
-import { StartPage } from "./components/StartPage/index";
-
+import { SetupPage } from "./components/SetupPage/index";
 const Index = () => {
     return <div className="parent">
-        <StartPage />
+        <SetupPage />
     </div>;
 };
 

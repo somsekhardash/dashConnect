@@ -14,8 +14,7 @@ export class LogIn extends React.Component<{}, {}> {
                     id="username"
                     tabIndex={1}
                     className="form-control"
-                    placeholder="Username"
-                    value="" />
+                    placeholder="Username" />
             </div>
             <div className="form-group">
                 <input
