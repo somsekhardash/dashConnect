@@ -15,6 +15,14 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"]
     },
+    devServer: {
+        port: 2018,
+        open: true,
+        historyApiFallback: true
+        // proxy: {
+        //   "/api": "http://localhost:8080"
+        // }
+    },    
     module: {
         rules: [
             {

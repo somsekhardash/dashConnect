@@ -4,9 +4,9 @@ import { SignUp } from "./../SignUp/index";
 import { LoginPanel } from "./../LoginPanel/index";
 import './index.scss';
 
-interface StartPageProps {
-    isLogIn: boolean,
-    ToggleCounter(event: any): void,
+export interface StartPageProps {
+    isLogIn?: boolean,
+    ToggleCounter?(event: any): void,
 }
 
 export class StartPage extends React.Component<StartPageProps, {}> {
@@ -19,8 +19,7 @@ export class StartPage extends React.Component<StartPageProps, {}> {
     }
 
     render() {
-        return <div className="container">
-            <div className="row">
+        return <div className="row">
                 <div className="col-md-6 col-md-offset-3">
                     <div className="panel panel-login">
                         <LoginPanel toggleLogin={this.toggleLogin.bind(this)} isLogIn={this.props.isLogIn}></LoginPanel>
@@ -35,7 +34,6 @@ export class StartPage extends React.Component<StartPageProps, {}> {
                     </div>
                 </div>
             </div>
-        </div>
     }
 }
 

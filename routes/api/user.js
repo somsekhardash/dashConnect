@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require("./../../models/user.js");
+const config = require('./../../config/key');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const saltRound = 10;
-
 const validateLogin = require("./../../validators/vLogin.js");
 
 router.get("/test", (req, res) => {
@@ -39,25 +41,30 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    // const { errors, isValid } = validateLogin(req.body);
-
-    // if (!isValid) {
-    //     return res.status(400).json(errors);
-    // }
 
     User.findOne({ email }).then(user => {
         if (!user) {
             return res.status(400).json({ email: "email is not there" });
         }
-        debugger;
+      
         bcrypt.compare(password, user.password).then((isTrue) => {
             if (isTrue) {
-                return res.json({ msg: "sucess" });
+                var token = jwt.sign({ date: user.date }, config.secret, {
+                    expiresIn: 36000
+                });
+                return res.status(200).send({ auth: true, token: `Bearer ${token}` });
             } else {
                 return res.status(400).json({ password: "sorry password is incorrect" });
             }
         });
     })
 });
+
+router.get('/profile', passport.authenticate('jwt', { session: false }),
+    function(req, res) {
+        console.log(res);
+        return res.status(200).send(res.send(req.user));
+    }
+);
 
 module.exports = router;
