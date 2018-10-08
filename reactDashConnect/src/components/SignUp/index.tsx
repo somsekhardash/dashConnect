@@ -1,21 +1,51 @@
 import * as React from 'react';
 
-export class SignUp extends React.Component<{}, {}> {
+export interface ISignUp {
+    name:String;
+    password:String;
+    email:String
+}
+
+export interface ISignUpProps {
+    fireRegister(event: ISignUp): void
+}
+
+export class SignUp extends React.Component<ISignUpProps, ISignUp> {
+
+    constructor(props:any){
+        super(props);
+        this.state = {
+            name:'',
+            password:'',
+            email:''
+        }
+        this.onInputChange = this.onInputChange.bind(this);
+        this.makeRegister = this.makeRegister.bind(this);
+    }
+
+    onInputChange(event:any){
+        event.preventDefault();
+        this.setState({
+          [event.currentTarget.name]: event.currentTarget.value
+        } as ISignUp);
+    }
+
+    makeRegister(){
+        this.props.fireRegister({...this.state});
+    }
+
+
     render() {
-        return <form
-            id="register-form"
-            action="https://phpoll.com/register/process"
-            method="post"
-            role="form">
+        return <div id="register-form">
             <div className="form-group">
                 <input
                     type="text"
-                    name="username"
-                    id="username"
+                    name="name"
+                    id="name"
                     tabIndex={1}
                     className="form-control"
-                    placeholder="Username"
-                    value="" />
+                    placeholder="name"
+                    onChange={this.onInputChange} />
             </div>
             <div className="form-group">
                 <input
@@ -25,7 +55,7 @@ export class SignUp extends React.Component<{}, {}> {
                     tabIndex={1}
                     className="form-control"
                     placeholder="Email Address"
-                    value="" />
+                    onChange={this.onInputChange} />
             </div>
             <div className="form-group">
                 <input
@@ -33,8 +63,9 @@ export class SignUp extends React.Component<{}, {}> {
                     name="password"
                     id="password"
                     tabIndex={2}
+                    onChange={this.onInputChange}
                     className="form-control"
-                    placeholder="Password" />
+                    placeholder="password" />
             </div>
             <div className="form-group">
                 <input
@@ -43,21 +74,25 @@ export class SignUp extends React.Component<{}, {}> {
                     id="confirm-password"
                     tabIndex={2}
                     className="form-control"
-                    placeholder="Confirm Password" />
+                    placeholder="Confirm password" />
             </div>
             <div className="form-group">
                 <div className="row">
                     <div className="col-sm-6 col-sm-offset-3">
-                        <input
-                            type="submit"
+                        <button
                             name="register-submit"
                             id="register-submit"
                             tabIndex={4}
                             className="form-control btn btn-register"
-                            value="Register Now" />
+                            onClick={this.makeRegister}>
+                            Register
+                        </button>    
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     }
 }
+
+
+// RegisterUser

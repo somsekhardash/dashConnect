@@ -8,12 +8,12 @@ import { LandingPageC } from './containers/LandingPageC';
 
 const Index = () => {
     return <Provider store={AppStore}>
-            <Router >
+            <Router>
                 <React.Fragment>
                     <Route exact path="/" component={StartPageC} />
                     <Route path="/landing" component={LandingPageC} />
                 </React.Fragment>  
-            </Router >
+            </Router>
         </Provider>;
 };
 

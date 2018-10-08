@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { ToggleCounter } from "../actions";
+import { ToggleCounter,RegisterUser } from "../actions";
 import { StartPage } from "../components/StartPage";
 import { AppState } from "../app-state";
 
@@ -10,7 +10,8 @@ interface IStartPageCProps {
 }
 
 interface IStartPageCDispatch {
-    ToggleCounter(): void
+    ToggleCounter(): void,
+    RegisterUser(): void
 }
 
 export class StartPageC extends React.Component<IStartPageCProps, IStartPageCDispatch> {
@@ -25,6 +26,6 @@ export const mapStateToProps = (store:AppState) => ({
     isLogIn: store.isLogIn
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ToggleCounter }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ToggleCounter,RegisterUser }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartPageC);

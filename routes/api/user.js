@@ -24,12 +24,13 @@ router.post("/register", (req, res) => {
                 password: req.body.password,
                 date: req.body.date
             });
+
             bcrypt.genSalt(saltRound, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    if (err) throw err;
+                bcrypt.hash(newUser.password, salt, (err2, hash) => {
+                    if (err2) console.log(err2);
                     newUser.password = hash;
                     newUser.save()
-                        .then(user => res.status(400).json(user))
+                        .then(user => res.status(200).json(user))
                         .catch(err => console.log(err))
                 });
             });
