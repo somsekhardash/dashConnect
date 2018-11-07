@@ -1,5 +1,6 @@
 export enum ActionTypes {
     TOGGLE_COUNTER,
     REGISTER_USER,
-    TOGGLE_ERROR
+    TOGGLE_ERROR,
+    UPDATE_TOKEN
 }

@@ -7,7 +7,8 @@ import './index.scss';
 export interface StartPageProps {
     isLogIn?: boolean,
     ToggleCounter?(event: any): void,
-    RegisterUser?(event: any): void
+    RegisterUser?(event: any): void,
+    LoginUser?(event: any): void
 }
 
 export class StartPage extends React.Component<StartPageProps, {}> {
@@ -23,6 +24,7 @@ export class StartPage extends React.Component<StartPageProps, {}> {
 
     fireLogin(obj:ILogInState){
         console.log(obj);
+        this.props.LoginUser(obj);
     }
 
     fireRegister(obj: ISignUp){

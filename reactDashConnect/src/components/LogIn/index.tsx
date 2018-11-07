@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export interface ILogInState {
-  username: String;
+  email: String;
   password: String;
 }
 
@@ -13,7 +13,7 @@ export class LogIn extends React.Component<ILogInProps, ILogInState> {
   constructor(props: Readonly<ILogInProps>) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password: ""
     };
     this.onInputChange = this.onInputChange.bind(this);
@@ -37,12 +37,12 @@ export class LogIn extends React.Component<ILogInProps, ILogInState> {
         <div className="form-group">
           <input
             type="text"
-            name="username"
-            id="username"
+            name="email"
+            id="email"
             tabIndex={1}
             onChange={this.onInputChange}
             className="form-control"
-            placeholder="Username"
+            placeholder="EmailID"
           />
         </div>
         <div className="form-group">

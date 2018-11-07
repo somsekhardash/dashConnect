@@ -44,7 +44,7 @@ export class SignUp extends React.Component<ISignUpProps, ISignUp> {
                     id="name"
                     tabIndex={1}
                     className="form-control"
-                    placeholder="name"
+                    placeholder="Username"
                     onChange={this.onInputChange} />
             </div>
             <div className="form-group">
@@ -65,7 +65,7 @@ export class SignUp extends React.Component<ISignUpProps, ISignUp> {
                     tabIndex={2}
                     onChange={this.onInputChange}
                     className="form-control"
-                    placeholder="password" />
+                    placeholder="Password" />
             </div>
             <div className="form-group">
                 <input
@@ -74,7 +74,7 @@ export class SignUp extends React.Component<ISignUpProps, ISignUp> {
                     id="confirm-password"
                     tabIndex={2}
                     className="form-control"
-                    placeholder="Confirm password" />
+                    placeholder="Confirm Password" />
             </div>
             <div className="form-group">
                 <div className="row">

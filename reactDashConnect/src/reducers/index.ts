@@ -4,7 +4,8 @@ import { ActionType } from "../actions";
 import { AppState } from "../app-state";
 
 const initialState : AppState = {
-    isLogIn: true
+    isLogIn: false,
+    dash_token: ''
 }
 
 export const TheReducer: Reducer<AppState> = (state: AppState = initialState , action: ActionType) => {
@@ -14,7 +15,12 @@ export const TheReducer: Reducer<AppState> = (state: AppState = initialState , a
                 ...state,
                 isLogIn: action.delta
             };
-
+        }
+        case ActionTypes.UPDATE_TOKEN: {
+            return {
+                ...state,
+                dash_token: action.delta+''
+            };
         }
         default:
             return state

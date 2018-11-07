@@ -17,4 +17,5 @@ const Index = () => {
         </Provider>;
 };
 
+console.log(AppStore.getState());
 ReactDOM.render(<Index />, document.getElementById("index"));
