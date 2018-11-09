@@ -5,7 +5,8 @@ import { AppState } from "../app-state";
 
 const initialState : AppState = {
     isLogIn: false,
-    dash_token: ''
+    dash_token: '',
+    auth: false
 }
 
 export const TheReducer: Reducer<AppState> = (state: AppState = initialState , action: ActionType) => {
@@ -19,6 +20,7 @@ export const TheReducer: Reducer<AppState> = (state: AppState = initialState , a
         case ActionTypes.UPDATE_TOKEN: {
             return {
                 ...state,
+                auth: true,
                 dash_token: action.delta+''
             };
         }

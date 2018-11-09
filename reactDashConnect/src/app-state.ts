@@ -2,7 +2,8 @@
 
 export interface AppState {
     isLogIn: boolean,
-    dash_token: string
+    dash_token: string,
+    auth: boolean
 }
 
 declare interface Window {

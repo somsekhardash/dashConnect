@@ -6,16 +6,38 @@ import StartPageC from './containers/StartPageC';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { LandingPageC } from './containers/LandingPageC';
 
+const routes = [
+    {
+      path: "/",
+      exact : true,
+      component: StartPageC
+    },
+    {
+      path: "/landing",
+      component: LandingPageC
+    }
+];
+
+const renderComponet = ( props: any, Component: any ) => {
+    return <Component {...props}/>
+}
+
 const Index = () => {
     return <Provider store={AppStore}>
             <Router>
-                <React.Fragment>
-                    <Route exact path="/" component={StartPageC} />
-                    <Route path="/landing" component={LandingPageC} />
-                </React.Fragment>  
-            </Router>
+                <div className='router-parent'>
+                    {routes.map(({component,path,exact},index)=> {
+                        return  <Route
+                                    {...{ path, exact }}
+                                    key = {index}
+                                    render={props => (
+                                        renderComponet(props, component)
+                                    )}
+                                />
+                    })}  
+                </div>
+            </Router>      
         </Provider>;
 };
 
-console.log(AppStore.getState());
 ReactDOM.render(<Index />, document.getElementById("index"));
