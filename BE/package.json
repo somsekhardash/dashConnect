@@ -1,0 +1,42 @@
+{
+  "name": "dashconnect",
+  "version": "1.0.0",
+  "description": "Testing MERN APP",
+  "main": "server.js",
+  "scripts": {
+    "startNode": "node server.js",
+    "start": "nodemon server.js",
+    "devServer": "npm run start --prefix reactDashConnect",
+    "startAll": "concurrently \"npm run startNode\" \"npm run devServer\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^16.4.13",
+    "@types/react-dom": "^16.0.7",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "validator": "^10.6.0"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "axios": "^0.18.0",
+    "mqtt": "^2.18.8",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.3",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.0.3",
+    "webpack-dev-server": "^3.1.10"
+  }
+}

@@ -1,0 +1,20 @@
+{
+    "extends": ["tslint:latest", "tslint-react"],
+    "rules": {
+      "no-var-keyword": true,
+      "jsx-alignment": false,
+      "jsx-no-lambda": false,
+      "member-access": [],
+      "quotemark": [true, "single"],
+      "object-literal-sort-keys": false,
+      "max-line-length": [false],
+      "max-classes-per-file": [false],
+      "trailing-comma": [false],
+      "no-debugger": false,
+      "comment-format": [false],
+      "no-trailing-whitespace": false,
+      "no-console": [false],
+      "arrow-parens": false
+    }
+  }
+  
