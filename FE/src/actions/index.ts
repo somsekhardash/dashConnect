@@ -1,11 +1,11 @@
-import { Action } from 'redux';
-import { ActionTypes } from './action-types';
-import { environmentSettings } from './../../etc/config';
-import { History } from 'history';
-import { ILogin } from './../models/index'; 
 import axios from 'axios';
+import { History } from 'history';
+import { Action } from 'redux';
+import { environmentSettings } from './../../etc/config';
+import { ILogin } from './../models/index'; 
+import { ActionTypes } from './action-types';
 
-export interface ActionType extends Action {
+export interface IActionType extends Action {
   type: ActionTypes;
   delta?: boolean;
 }
@@ -13,8 +13,8 @@ export interface ActionType extends Action {
 export const ToggleCounter = (delta: boolean): any => {
   return {
     type: ActionTypes.TOGGLE_COUNTER,
-    delta: delta
-  }
+    delta
+  };
 };
 
 export interface IAjax {
@@ -29,22 +29,15 @@ export const ApiCall = (options: object) => {
   const { url = '', method = 'GET', headers = {}, params = {} } = {
     ...options
   };
-  let call;
-  if (method.toLowerCase() == 'post') {
-    call = axios.post(`${baseUrl}${url}`, { ...params }, { ...headers });
-  } else {
-    call = axios.get(`${baseUrl}${url}`);
-  }
+  const call = (method.toLowerCase() === 'post') ?  axios.post(`${baseUrl}${url}`, { ...params }, { ...headers }) : axios.get(`${baseUrl}${url}`) ;
   call.then(
     res => {
-      console.log(res);
       return res;
     },
     err => {
       return err;
     }
   );
-
   return call;
 };
 
@@ -56,20 +49,19 @@ export const RegisterUser = (user: any): any => (dispatch: any): any => {
   };
 
   return ApiCall(para)
-    .then(function(response) {
+    .then((response) => {
       dispatch({
         type: ActionTypes.TOGGLE_COUNTER,
         delta: true
       });
     })
-    .catch(function(error) {
+    .catch((error) => {
       return {
         type: ActionTypes.TOGGLE_ERROR,
         delta: error
       };
     });
 };
-
 
 export const LoginUser = (user: ILogin,  history: History): any => (dispatch: any): any => {
   const para = {
@@ -78,12 +70,12 @@ export const LoginUser = (user: ILogin,  history: History): any => (dispatch: an
     params: user
   };
   return ApiCall(para)
-    .then(function(response) {
-        window.localStorage['dash_token'] = response.data.token;
+    .then((response) => {
+        window.localStorage.dash_token = response.data.token;
         UpdateToken(response.data.token);
         redirectLanding(history);
     })
-    .catch(function(error) {
+    .catch((error) => {
       debugger;
     });
 };
@@ -95,40 +87,39 @@ export const getProfile = (): any => (dispatch: any): any => {
     method: 'GET'
   };
   return ApiCall(para)
-    .then(function(response) {
+    .then((response) => {
         debugger;
     })
-    .catch(function(error) {
+    .catch((error) => {
       debugger;
     });
 };
-
 
 export const setProfile = (profile: any): any => (dispatch: any): any => {
   const para = {
     url: '/profile/saveprofile',
     method: 'POST',
     params: profile,
-    headers: {'Authorization': "bearer " + window.localStorage['dash_token']}
+    headers: {Authorization: 'bearer ' + window.localStorage.dash_token}
   };
   return ApiCall(para)
-    .then(function(response) {
+    .then((response) => {
         debugger;
     })
-    .catch(function(error) {
+    .catch((error) => {
       debugger;
     });
 };
 
 export const redirectLanding = (history: History) => {
-  if(window.localStorage.dash_token)
+  if (window.localStorage.dash_token) {
     history.push('/landing');
-  else return false;
-}
+  } else { return false; }
+};
 
-export const UpdateToken = (token: string): any => (dispatch: any) : any => {
+export const UpdateToken = (token: string): any => (dispatch: any): any => {
     dispatch({
       type: ActionTypes.UPDATE_TOKEN,
       delta: token
     });
-}
+};

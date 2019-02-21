@@ -1,15 +1,14 @@
-import { Reducer } from "redux";
-import { ActionTypes } from "../actions/action-types";
-import { ActionType } from "../actions";
-import { IAppState } from "../app-state";
+import { Reducer } from 'redux';
+import { ActionTypes } from '../actions/action-types';
+import { IAppState } from '../app-state';
 
-const initialState : IAppState = {
+const initialState: IAppState = {
     isLogIn: false,
     dash_token: '',
     auth: false
-}
+};
 
-export const TheReducer: Reducer<IAppState> = (state: IAppState = initialState , action: ActionType) => {
+export const TheReducer: Reducer<IAppState> = (state: IAppState = initialState , action: any) => {
     switch (action.type) {
         case ActionTypes.TOGGLE_COUNTER: {
             return {
@@ -21,10 +20,10 @@ export const TheReducer: Reducer<IAppState> = (state: IAppState = initialState ,
             return {
                 ...state,
                 auth: true,
-                dash_token: action.delta+''
+                dash_token: action.delta
             };
         }
         default:
-            return state
+            return state;
     }
-}
+};

@@ -1,43 +1,52 @@
 import * as React from 'react';
-import * as ReactDOM from "react-dom";
+import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import AppStore from './store';
-import StartPageC from './containers/StartPageC';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { LandingPageC } from './containers/LandingPageC';
+import StartPageC from './containers/StartPageC';
+import AppStore from './store';
 
 const routes = [
     {
-      path: "/",
+      path: '/',
       exact : true,
       component: StartPageC
     },
     {
-      path: "/landing",
+      path: '/landing',
       component: LandingPageC
     }
 ];
 
-const renderComponet = ( props: any, Component: any ) => {
-    return <Component {...props}/>
-}
-
-const Index = () => {
-    return <Provider store={AppStore}>
-            <Router>
-                <div className='router-parent'>
-                    {routes.map(({component,path,exact},index)=> {
-                        return  <Route
-                                    {...{ path, exact}}
-                                    key = {index}
-                                    render={props => (
-                                        renderComponet(props, component)
-                                    )}
-                                />
-                    })}  
-                </div>
-            </Router>      
-        </Provider>;
+const renderComponet = (props: any, Component: any) => {
+    return <Component {...props}/>;
 };
 
-ReactDOM.render(<Index />, document.getElementById("index"));
+const getRoute = () => {
+    return (routes.map(({component, path, exact}, index) => {
+        return (
+            <Route
+                    {...{ path, exact}}
+                    key={index}
+                    // tslint:disable-next-line:jsx-no-multiline-js
+                    render={ props => (
+                        renderComponet(props, component)
+                    )}
+                />
+            );
+    })); 
+};
+
+const Index = () => {
+    return ( 
+        <Provider store={AppStore}>
+            <Router>
+                <div className='router-parent'>
+                    {getRoute()}
+                </div>
+            </Router>      
+        </Provider>
+    );
+};
+
+ReactDOM.render(<Index />, document.getElementById('index'));

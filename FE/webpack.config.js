@@ -1,5 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-
+const path = require('path');
 const htmlPlugin = new HtmlWebPackPlugin({
     template: "./src/index.html",
     filename: "./index.html"
@@ -35,6 +35,18 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"
+                }
+            },
+            {
+                enforce: 'pre',
+                test: /\.tsx?$/,
+                loader: 'tslint-loader',
+                exclude: /(node_modules)/,
+                options: {
+                  emitErrors: true,
+                  failOnHint: true,
+                  configFile: 'tslint.json',
+                  tsConfigFile: 'tsconfig.json'
                 }
             },
             { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
