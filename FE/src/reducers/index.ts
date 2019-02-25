@@ -3,7 +3,7 @@ import { ActionTypes } from '../actions/action-types';
 import { IAppState } from '../app-state';
 
 const initialState: IAppState = {
-    isLogIn: false,
+    showLogIn: false,
     dash_token: '',
     auth: false
 };
@@ -13,10 +13,10 @@ export const TheReducer: Reducer<IAppState> = (state: IAppState = initialState ,
         case ActionTypes.TOGGLE_COUNTER: {
             return {
                 ...state,
-                isLogIn: action.delta
+                showLogIn: action.delta
             };
         }
-        case ActionTypes.UPDATE_TOKEN: {
+        case ActionTypes.SET_LOGIN_TOKEN: {
             return {
                 ...state,
                 auth: true,

@@ -8,15 +8,22 @@ export interface IProfileState {
 }
 
 export interface IProfileProps {
-  isLogIn?: boolean;
+  showLogIn?: boolean;
   dispatchGetProfile(): void;
   dispatchSetProfile(user: any): void;
 }
 
 export class Profile extends React.Component<IProfileProps, IProfileState> {
+  
   constructor(props: Readonly<IProfileProps>) {
     super(props);
+    this.setProfile = this.setProfile.bind(this);
+  }
 
+  public setProfile() {
+    this.props.dispatchSetProfile({
+      name: 'som'
+    });
   }
 
   public render() {
@@ -67,7 +74,8 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
                             name='register-submit'
                             id='register-submit'
                             tabIndex={4}
-                            className='form-control btn btn-register'>
+                            className='form-control btn btn-register'
+                            onClick={this.setProfile}>
                             Register
                         </button>    
                     </div>

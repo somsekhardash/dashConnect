@@ -1,7 +1,7 @@
 // import { Toggle } from "./models/index";
 
 export interface IAppState {
-    isLogIn: boolean;
+    showLogIn: boolean;
     dash_token: string;
     auth: boolean;
 }

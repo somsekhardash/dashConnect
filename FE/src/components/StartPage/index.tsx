@@ -6,7 +6,7 @@ import { ISignUp, SignUp } from './../SignUp/index';
 import './index.scss';
 
 export interface IStartPageProps {
-    isLogIn: boolean;
+    showLogIn: boolean;
     history?: History;
     dispatchToggleCounter(event: any): void;
     dispatchRegisterUser(event: any): void;
@@ -26,12 +26,12 @@ export class StartPage extends React.Component<IStartPageProps, {}> {
             <div className='row'>
                 <div className='col-md-6 col-md-offset-3'>
                     <div className='panel panel-login'>
-                        <LoginPanel toggleLogin={this.toggleLogin} isLogIn={this.props.isLogIn} />
+                        <LoginPanel toggleLogin={this.toggleLogin} showLogIn={this.props.showLogIn} />
                         <div className='panel-body'>
                             <div className='row'>
                                 <div className='col-lg-12'>
-                                    {this.props.isLogIn && <LogIn fireLogin={this.fireLogin} />}
-                                    {!this.props.isLogIn && <SignUp fireRegister={this.fireRegister} />}
+                                    {this.props.showLogIn && <LogIn fireLogin={this.fireLogin} />}
+                                    {!this.props.showLogIn && <SignUp fireRegister={this.fireRegister} />}
                                 </div>
                             </div>
                         </div>
@@ -41,8 +41,8 @@ export class StartPage extends React.Component<IStartPageProps, {}> {
         );
     }
 
-    private toggleLogin(isLogIn: boolean) {
-        this.props.dispatchToggleCounter(isLogIn);
+    private toggleLogin(showLogIn: boolean) {
+        this.props.dispatchToggleCounter(showLogIn);
     }
 
     private fireLogin(obj: ILogInState) {

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { History } from 'history';
+import * as JWT from 'jwt-decode';
 import { Action } from 'redux';
 import { environmentSettings } from './../../etc/config';
 import { ILogin } from './../models/index'; 
 import { ActionTypes } from './action-types';
-
 export interface IActionType extends Action {
   type: ActionTypes;
   delta?: boolean;
@@ -29,6 +29,7 @@ export const ApiCall = (options: object) => {
   const { url = '', method = 'GET', headers = {}, params = {} } = {
     ...options
   };
+  console.log(options);
   const call = (method.toLowerCase() === 'post') ?  axios.post(`${baseUrl}${url}`, { ...params }, { ...headers }) : axios.get(`${baseUrl}${url}`) ;
   call.then(
     res => {
@@ -39,6 +40,14 @@ export const ApiCall = (options: object) => {
     }
   );
   return call;
+};
+
+export const RedirectToLanding = (history: History): any => (dispatch: any): any => {
+  history.push('/landing');
+  dispatch({
+      type: ActionTypes.SET_LOGIN_TOKEN,
+      delta: window.localStorage.dash_token
+  });
 };
 
 export const RegisterUser = (user: any): any => (dispatch: any): any => {
@@ -72,26 +81,30 @@ export const LoginUser = (user: ILogin,  history: History): any => (dispatch: an
   return ApiCall(para)
     .then((response) => {
         window.localStorage.dash_token = response.data.token;
-        UpdateToken(response.data.token);
-        redirectLanding(history);
+        history.push('/landing');
+        dispatch({
+            type: ActionTypes.SET_LOGIN_TOKEN,
+            delta: window.localStorage.dash_token
+        });
     })
     .catch((error) => {
-      debugger;
+      console.error(error);
     });
 };
 
 export const getProfile = (): any => (dispatch: any): any => {
-  debugger;
   const para = {
-    url: '/profile/details',
-    method: 'GET'
+    url: '/profile/getprofile',
+    method: 'GET',
+    headers: {Authorization: 'bearer ' + window.localStorage.dash_token}
   };
+  console.log(JWT(window.localStorage.dash_token));
   return ApiCall(para)
     .then((response) => {
-        debugger;
+        console.log(response);
     })
     .catch((error) => {
-      debugger;
+      console.error(error);
     });
 };
 
@@ -102,24 +115,12 @@ export const setProfile = (profile: any): any => (dispatch: any): any => {
     params: profile,
     headers: {Authorization: 'bearer ' + window.localStorage.dash_token}
   };
+  
   return ApiCall(para)
     .then((response) => {
-        debugger;
+        console.log(response);
     })
     .catch((error) => {
-      debugger;
-    });
-};
-
-export const redirectLanding = (history: History) => {
-  if (window.localStorage.dash_token) {
-    history.push('/landing');
-  } else { return false; }
-};
-
-export const UpdateToken = (token: string): any => (dispatch: any): any => {
-    dispatch({
-      type: ActionTypes.UPDATE_TOKEN,
-      delta: token
+      console.error(error);
     });
 };

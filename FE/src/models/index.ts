@@ -1,5 +1,5 @@
 export class Toggle {
-    public isLogIn: boolean;
+    public showLogIn: boolean;
 }
 
 export interface ILogin {

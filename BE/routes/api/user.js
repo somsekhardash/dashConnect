@@ -12,7 +12,6 @@ router.get("/test", (req, res) => {
     res.json({ msg: "this is user" });
 });
 
-
 router.post("/register", (req, res) => {
     User.findOne({ email: req.body.email }).then(user => {
         if (user) {
@@ -50,7 +49,7 @@ router.post("/login", (req, res) => {
       
         bcrypt.compare(password, user.password).then((isTrue) => {
             if (isTrue) {
-                var token = jwt.sign({ date: user.date }, config.secret, {
+                var token = jwt.sign({ date: user.date, email: user.email }, config.secret, {
                     expiresIn: 36000
                 });
                 return res.status(200).send({ auth: true, token: `Bearer ${token}` });

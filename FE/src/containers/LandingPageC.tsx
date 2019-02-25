@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 import * as ActionCreator from '../actions';
 import { IAppState } from '../app-state';
 import { Profile } from './../components/Profile/index';
 
 interface IProfilePageState {
-    isLogIn: boolean;
     dash_token: string;
 }
 
@@ -15,13 +15,15 @@ interface IProfilePageDispatch {
     dispatchSetProfile(): void;
 }
 
-export interface  IProfilePageProps extends IProfilePageState, IProfilePageDispatch {
-    history: History;
+interface  IProfilePageProps extends IProfilePageState, IProfilePageDispatch {
     dispatchSetProfile(): void;
     dispatchGetProfile(): void;
 }
 
-export class LandingPageC extends React.Component<IProfilePageProps> {
+class LandingPageC extends React.Component<IProfilePageProps> {
+    public componentDidMount() {
+        this.props.dispatchGetProfile();
+    }
     public render() {
         return (
             <div className='container'>
@@ -33,7 +35,6 @@ export class LandingPageC extends React.Component<IProfilePageProps> {
 
 const mapStateToProps = (store: IAppState): IProfilePageState => {
     return ({
-        isLogIn: store.isLogIn,
         dash_token: store.dash_token
     });
 };
@@ -46,8 +47,6 @@ const mapDispatchToProps = (dispatch: any) => {
 };
 
 const mergeProps = (propsFromState: IAppState, propsFromDispatch: any, ownProps: RouteComponentProps<void>) => {
-    console.log(propsFromState);
-    debugger;
     return {
         ...propsFromState,
         ...propsFromDispatch,
