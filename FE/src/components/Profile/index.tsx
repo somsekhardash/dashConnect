@@ -1,11 +1,5 @@
 import * as React from 'react';
-
-export interface IProfileState {
-  name: string;
-  number: number;
-  email: string;
-  gender: string;
-}
+import { IProfile } from './../../models/index';
 
 export interface IProfileProps {
   showLogIn?: boolean;
@@ -13,16 +7,38 @@ export interface IProfileProps {
   dispatchSetProfile(user: any): void;
 }
 
-export class Profile extends React.Component<IProfileProps, IProfileState> {
-  
+export class Profile extends React.Component<IProfileProps, IProfile> {
   constructor(props: Readonly<IProfileProps>) {
     super(props);
+    this.state = {
+      fullname: '',
+      workemail: '',
+      aboutme: '',
+      mobilenumber: ''
+    };
+    this.setProfile = this.setProfile.bind(this);
+    this.inputChange = this.inputChange.bind(this);
     this.setProfile = this.setProfile.bind(this);
   }
 
+  public UNSAFE_componentWillReceiveProps(newprops: any) {
+    if (newprops.profile.fullname !== this.state.fullname) {
+      this.setState({
+        fullname: newprops.profile.fullname,
+        workemail: newprops.profile.workemail,
+        aboutme: newprops.profile.aboutme,
+        mobilenumber: newprops.profile.mobilenumber
+      });
+    }
+  }
+
   public setProfile() {
-    this.props.dispatchSetProfile({
-      name: 'som'
+    this.props.dispatchSetProfile({...this.state});
+  }
+
+  public inputChange(event: any) {
+    this.setState({
+      [event.target.name]: event.target.value
     });
   }
 
@@ -32,40 +48,50 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
      <div className='form-group'>
                 <input
                     type='text'
-                    name='name'
-                    id='name'
+                    name='fullname'
+                    id='fullname'
                     tabIndex={1}
                     className='form-control'
                     placeholder='full name'
-                     />
+                    value={this.state.fullname}
+                    onChange={this.inputChange}
+                />
             </div>
             <div className='form-group'>
                 <input
                     type='email'
-                    name='email'
-                    id='email'
+                    name='workemail'
+                    id='workemail'
                     tabIndex={1}
                     className='form-control'
                     placeholder='Email Address'
-                     />
+                    value={this.state.workemail}
+                    onChange={this.inputChange}
+                />
             </div>
             <div className='form-group'>
                 <input
                     type='mobile'
-                    name='mobile'
-                    id='mobile'
+                    name='mobilenumber'
+                    id='mobilenumber'
                     tabIndex={2}
                     className='form-control'
-                    placeholder='mobile' />
+                    placeholder='mobilenumber'
+                    value={this.state.mobilenumber} 
+                    onChange={this.inputChange}
+                />
             </div>
             <div className='form-group'>
                 <input
-                    type='aboutMe'
-                    name='aboutMe'
-                    id='aboutMe'
+                    type='text'
+                    name='aboutme'
+                    id='aboutme'
                     tabIndex={2}
                     className='form-control'
-                    placeholder='aboutMe' />
+                    placeholder='aboutme' 
+                    value={this.state.aboutme}
+                    onChange={this.inputChange}
+                />
             </div>
             <div className='form-group'>
                 <div className='row'>

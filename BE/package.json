@@ -30,6 +30,7 @@
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.18.0",
+    "jwt-decode": "^2.2.0",
     "mqtt": "^2.18.8",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.3",

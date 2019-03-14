@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import * as ActionCreator from '../actions';
-import { IAppState } from '../app-state';
+import { IAppState, IProfileState } from '../app-state';
 import { Profile } from './../components/Profile/index';
 
 interface IProfilePageState {
     dash_token: string;
+    profile: IProfileState;
+    loader: boolean;
 }
 
 interface IProfilePageDispatch {
@@ -21,13 +23,15 @@ interface  IProfilePageProps extends IProfilePageState, IProfilePageDispatch {
 }
 
 class LandingPageC extends React.Component<IProfilePageProps> {
-    public componentDidMount() {
+    public constructor(props: IProfilePageProps) {
+        super(props);
         this.props.dispatchGetProfile();
     }
     public render() {
         return (
             <div className='container'>
-                <Profile {...this.props} />
+                {this.props.loader && <h1> ........loading</h1>}
+                {!this.props.loader && <Profile {...this.props} />}
             </div>
         );
     }
@@ -35,7 +39,9 @@ class LandingPageC extends React.Component<IProfilePageProps> {
 
 const mapStateToProps = (store: IAppState): IProfilePageState => {
     return ({
-        dash_token: store.dash_token
+        dash_token: store.dash_token,
+        profile: store.profile,
+        loader: store.loader
     });
 };
 

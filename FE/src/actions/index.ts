@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { History } from 'history';
-import * as JWT from 'jwt-decode';
 import { Action } from 'redux';
 import { environmentSettings } from './../../etc/config';
 import { ILogin } from './../models/index'; 
@@ -24,13 +23,16 @@ export interface IAjax {
   params: object;
 }
 
-export const ApiCall = (options: object) => {
+export const ApiCall = (options: object, dispatch: any) => {
+  dispatch({
+    type: ActionTypes.TOGGLE_LOADER,
+    delta: true
+  });
   const baseUrl = `${environmentSettings.apiUrl}/api`;
   const { url = '', method = 'GET', headers = {}, params = {} } = {
     ...options
   };
-  console.log(options);
-  const call = (method.toLowerCase() === 'post') ?  axios.post(`${baseUrl}${url}`, { ...params }, { ...headers }) : axios.get(`${baseUrl}${url}`) ;
+  const call = (method.toLowerCase() === 'post') ?  axios.post(`${baseUrl}${url}`, { ...params }, {headers}) : axios.get(`${baseUrl}${url}`, {headers}) ;
   call.then(
     res => {
       return res;
@@ -57,7 +59,7 @@ export const RegisterUser = (user: any): any => (dispatch: any): any => {
     params: user
   };
 
-  return ApiCall(para)
+  return ApiCall(para, dispatch)
     .then((response) => {
       dispatch({
         type: ActionTypes.TOGGLE_COUNTER,
@@ -78,7 +80,7 @@ export const LoginUser = (user: ILogin,  history: History): any => (dispatch: an
     method: 'POST',
     params: user
   };
-  return ApiCall(para)
+  return ApiCall(para, dispatch)
     .then((response) => {
         window.localStorage.dash_token = response.data.token;
         history.push('/landing');
@@ -96,12 +98,23 @@ export const getProfile = (): any => (dispatch: any): any => {
   const para = {
     url: '/profile/getprofile',
     method: 'GET',
-    headers: {Authorization: 'bearer ' + window.localStorage.dash_token}
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `${window.localStorage.dash_token}`
+    }
   };
-  console.log(JWT(window.localStorage.dash_token));
-  return ApiCall(para)
+  
+  return ApiCall(para, dispatch)
     .then((response) => {
-        console.log(response);
+      dispatch({
+        type: ActionTypes.TOGGLE_LOADER,
+        delta: false
+      });
+      dispatch({
+        type: ActionTypes.GET_PROFILE,
+        delta: response.data.profile
+      });
     })
     .catch((error) => {
       console.error(error);
@@ -109,14 +122,19 @@ export const getProfile = (): any => (dispatch: any): any => {
 };
 
 export const setProfile = (profile: any): any => (dispatch: any): any => {
+ 
   const para = {
-    url: '/profile/saveprofile',
+    url: '/profile/setprofile',
     method: 'POST',
     params: profile,
-    headers: {Authorization: 'bearer ' + window.localStorage.dash_token}
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `${window.localStorage.dash_token}`
+    }
   };
   
-  return ApiCall(para)
+  return ApiCall(para, dispatch)
     .then((response) => {
         console.log(response);
     })

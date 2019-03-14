@@ -1,11 +1,24 @@
 import { Reducer } from 'redux';
 import { ActionTypes } from '../actions/action-types';
-import { IAppState } from '../app-state';
+import { IAppState, IProfileState, IUserDetails } from '../app-state';
+
+const initialUserDetailsState: IUserDetails = {
+    fullName: '',
+    email: '',
+    number: '',
+    aboutMe: ''
+};
+
+const initialProfileSate: IProfileState = {
+    userDetails: initialUserDetailsState
+};
 
 const initialState: IAppState = {
     showLogIn: false,
     dash_token: '',
-    auth: false
+    auth: false,
+    profile: initialProfileSate,
+    loader: false
 };
 
 export const TheReducer: Reducer<IAppState> = (state: IAppState = initialState , action: any) => {
@@ -21,6 +34,18 @@ export const TheReducer: Reducer<IAppState> = (state: IAppState = initialState ,
                 ...state,
                 auth: true,
                 dash_token: action.delta
+            };
+        }
+        case ActionTypes.GET_PROFILE: {
+            return {
+                ...state,
+                profile: {...action.delta.userDetails}
+            };
+        }
+        case ActionTypes.TOGGLE_LOADER: {
+            return {
+                ...state,
+                loader: action.delta
             };
         }
         default:
